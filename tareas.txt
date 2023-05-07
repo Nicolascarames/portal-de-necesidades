@@ -1,0 +1,18 @@
+crear un nuevo servicios requerido, table de servicios que va a tener:
+- id de el propietario de este servicio(no unico);
+- un id unico de el servicio ;
+- titulo
+- explicación 
+- fichero
+- tipo de servicio
+- fecha creacion(timestamp currenttimestanp)
+
+
+crear un nuevo servicios que necesito, table de servicios que va a tener:
+- id de el propietario de este servicio(no unico);
+- un id unico de el servicio ;
+- titulo
+- explicación 
+- fichero
+- tipo de servicio
+- fecha creacion(timestamp currenttimestanp)
