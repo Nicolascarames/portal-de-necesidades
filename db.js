@@ -12,7 +12,7 @@ let pool;
             port:3306
         })
     }
-    return await pool.getconnection()
+    return await pool.getConnection()
  }
  
 module.exports = DBconn

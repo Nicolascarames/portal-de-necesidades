@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors');
-const {BDconn} = require('./db');
+const BDconn = require('./db');
 const app= express();
 app.use(cors());
 app.listen(4000);
