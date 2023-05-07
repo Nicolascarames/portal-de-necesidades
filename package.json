@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Nicolascarames/portal-de-necesidades-grupo-e#readme",
   "dependencies": {
+    "mysql2": "^3.3.0",
     "nodemon": "^2.0.22"
   }
 }
