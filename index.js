@@ -9,4 +9,3 @@ app.use(express.json());
 app.use(router)
 
 
-console.log('hello world');
