@@ -1,0 +1,24 @@
+{
+  "name": "portal-de-necesidades-grupo-e",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nicolascarames/portal-de-necesidades-grupo-e.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nicolascarames/portal-de-necesidades-grupo-e/issues"
+  },
+  "homepage": "https://github.com/Nicolascarames/portal-de-necesidades-grupo-e#readme",
+  "dependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
