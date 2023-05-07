@@ -1,18 +1,16 @@
-crear un nuevo servicios requerido, table de servicios que va a tener:
-- id de el propietario de este servicio(no unico);
-- un id unico de el servicio ;
-- titulo
-- explicación 
-- fichero
-- tipo de servicio
-- fecha creacion(timestamp currenttimestanp)
+/list get lista servicios requeridos
+
+/login post por body recibe email y password
+     crea token 
+
+/register post body recibe nombre(obligatorio) email(obligatorio) biografia avatar
+
+/addservice post body recibe titulo(obligatorio) explicacion(obligatorio) fichero
+
+/replyservice recibe el id del servicio, post de comentario(obligatorio) y fichero
+
+/done post recibe idservicio idusuario, modifica cambio de no echo a echo el servicios
+
+middleware de token para autentificar las siguientes peticiones
 
 
-crear un nuevo servicios que necesito, table de servicios que va a tener:
-- id de el propietario de este servicio(no unico);
-- un id unico de el servicio ;
-- titulo
-- explicación 
-- fichero
-- tipo de servicio
-- fecha creacion(timestamp currenttimestanp)
