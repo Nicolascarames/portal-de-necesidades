@@ -1,0 +1,16 @@
+/list get lista servicios requeridos
+
+/login post por body recibe email y password
+     crea token 
+
+/register post body recibe nombre(obligatorio) email(obligatorio) biografia avatar
+
+/addservice post body recibe titulo(obligatorio) explicacion(obligatorio) fichero
+
+/replyservice recibe el id del servicio, post de comentario(obligatorio) y fichero
+
+/done post recibe idservicio idusuario, modifica cambio de no echo a echo el servicios
+
+middleware de token para autentificar las siguientes peticiones
+
+
