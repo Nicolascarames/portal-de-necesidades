@@ -1,7 +1,5 @@
 const BDconn = require('../database/db');
 
-  
-  
   const Test = async(req, res) => {
     const connect = await BDconn();
     const [response] = await connect.query('DESCRIBE users ');

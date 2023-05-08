@@ -1,8 +1,8 @@
 const express = require('express');
-const router = express.Router();
+
 const Upload = require('../middleware/ImageUpload')
 const { AddService } = require('../controllers')
-
+const router = express.Router();
 const { loginUser, getUser } = require('../controllers');
 
 
