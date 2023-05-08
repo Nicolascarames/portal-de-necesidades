@@ -1,7 +1,4 @@
 const BDconn = require('../database/db');
-
-
-
 const Test = async (req, res) => {
   const connect = await BDconn();
   const [response] = await connect.query('DESCRIBE users ');
@@ -12,12 +9,10 @@ const Prueba = (req, res) => {
   res.send('recibido pueba2!')
 }
 
-
-
 const AddService = async (req,res) => {
   try {
     if(req.file){
-      console.log('file recibido',req.file);
+      console.log('file recibido',req.file.filename);
       console.log('body recibido',req.body);
   
     }else{
