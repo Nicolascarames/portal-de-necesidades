@@ -2,11 +2,12 @@ const mysql = require('mysql2/promise');
 const env = require('dotenv').config();
 let pool;
 async function DBconn() {
-  if (!pool) { 
+  if (!pool) {
     pool = mysql.createPool({
+      connectionLimit: 10,
       host: process.env.host,
       user: process.env.user,
-      password: process.env.password, 
+      password: process.env.password,
       database: process.env.database,
       port: process.env.port,
     });

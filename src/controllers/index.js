@@ -1,14 +1,7 @@
-const BDconn = require('../database/db');
+const loginUser = require('./login');
+const getUser = require('./getUser');
 
-  
-  
-  const Test = async(req, res) => {
-    const connect = await BDconn();
-    const [response] = await connect.query('DESCRIBE users ');
-    console.log(response);
-    res.send('recibido!');
-  }
-  const Prueba = (req,res) =>{
-    res.send('recibido pueba2!')
-  }
-  module.exports = {Test,Prueba}
+module.exports = {
+  loginUser,
+  getUser,
+};
