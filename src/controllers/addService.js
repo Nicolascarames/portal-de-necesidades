@@ -1,16 +1,52 @@
+const getDB = require('../database/db');
+const fs = require('fs')
+const path = require('path')
+
 const AddService = async (req, res) => {
+
   try {
-    if (req.file) {
-      console.log('file recibido', req.file.filename);
-      console.log('body recibido', req.body);
+
+    const { title, description } = req.body;
+
+    if (!title || !description) {
+      if (req.file) {
+        fs.unlinkSync(path.join(__dirname + '/../users/images/' + req.file.filename)), (err) => { if (err) { console.log(err); return } };
+        res.send('se necesita un titulo y una explicación para crear un nuevo servicio ');
+        return
+      }
     } else {
-      console.log('no hay file');
-      console.log('body recibido', req.body);
+      if (req.file) {
+        //si hay un titulo , descripcion ,file guardo el todo en la tabla servicios
+        const fileName = req.file.filename;
+        const userId = req.isUser.id;
+        const connection = await getDB();
+
+        const [response] = await connection.query(`INSERT INTO servicios(titulo,descripcion,fichero,user_id) VALUES(?,?,?,? )`, [title, description, fileName, userId])
+        connection.release();
+
+        //conpruebo que la query se hizo correctamente
+
+        response.affectedRows > 0 ?
+          res.send(`servicio creado corectamente!`) :
+          res.send('Problema con la conexión con la base de datos :( porfavor,vuelve a intentarlo');
+
+      } else {
+        //si solo  hay un titulo y una descripcion guardo las dos  en la tabla servicios sin la imagen
+
+        const userId = req.isUser.id;
+        const connection = await getDB();
+        const [response] = await connection.query(`INSERT INTO servicios(titulo,descripcion,user_id) VALUES(?,?,?)`, [title, description, userId])
+        connection.release();
+        //conpruebo que la query se hizo correctamente
+        response.affectedRows > 0 ?
+          res.send(`servicio creado corectamente!`) :
+          res.send('Problema con la conexión con la base de datos :( porfavor,vuelve a intentarlo')
+
+      }
     }
-    res.send('add service listener');
-    console.log('works!');
+
   } catch (error) {
-    res.send(error);
+    console.log(error);
   }
 };
 

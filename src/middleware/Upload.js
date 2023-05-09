@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 
 const Upload = multer({
     storage: storage,
-    dest: path.join(__dirname+ '../users/images'),
+    dest: path.join(__dirname+ '/../users/images'),
  
     limits:{fileSize: 2000000},
     fileFilter: (req,file,cb)=>{
@@ -28,7 +28,6 @@ const Upload = multer({
         if(mimetype && extname){ 
             return cb(null,true)
         }
-            
             return  cb('extención no valida') 
     }
 }).single('image');
