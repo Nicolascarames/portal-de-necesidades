@@ -43,7 +43,6 @@ const loginUser = async (req, res) => {
         token,
       },
     });
-
     conexion.release();
   } catch (error) {
     console.error(error);
