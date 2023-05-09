@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require('uuid');
  
 
 const storage = multer.diskStorage({
-    destination: path.join(__dirname+ '/../users/images'),
+    destination: path.join(__dirname+ '/../users/services'),
     filename:(req,file,cb)=>{
      
             cb(null,uuidv4() + path.extname(file.originalname));
@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 
 const Upload = multer({
     storage: storage,
-    dest: path.join(__dirname+ '/../users/images'),
+    dest: path.join(__dirname+ '/../users/services'),
  
     limits:{fileSize: 2000000},
     fileFilter: (req,file,cb)=>{
