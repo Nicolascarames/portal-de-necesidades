@@ -21,7 +21,7 @@ const Upload = multer({
     limits:{fileSize: 2000000},
     fileFilter: (req,file,cb)=>{
        
-        const fileTypes = /jpeg|jpg|png|gif/;
+        const fileTypes = /jpeg|jpg|png|pdf|txt/;
         const mimetype = fileTypes.test(file.mimetype);
        
         const extname = fileTypes.test(path.extname(file.originalname));
