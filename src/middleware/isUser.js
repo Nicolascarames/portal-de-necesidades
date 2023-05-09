@@ -20,6 +20,7 @@ const isUser = (req, res, next) => {
     req.isUser = token;
 
     // console.log(token);
+
     next();
   } catch (error) {
     next(error);
