@@ -9,8 +9,6 @@ const getUser = async (req, res) => {
       id,
     ]);
 
-    conexion.release();
-
     if (user.length) {
       return res.send({
         status: 'ok',
@@ -19,6 +17,7 @@ const getUser = async (req, res) => {
     } else {
       res.status(400).send('usuario no encontrado');
     }
+    conexion.release();
   } catch (error) {
     console.error(error);
   }

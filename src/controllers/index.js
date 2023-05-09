@@ -1,9 +1,11 @@
 const AddService = require('./addService');
 const getUser = require('./getUser');
 const loginUser = require('./loginUser');
+const deleteUser = require('./deleteUser');
 
 module.exports = {
   AddService,
   getUser,
   loginUser,
+  deleteUser,
 };
