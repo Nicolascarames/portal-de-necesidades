@@ -13,8 +13,7 @@ module.exports = {
   loginUser,
   deleteUser,
   sendMail,
-  addComment
-
+  addComment,
   newUser,
   modifyPwd,
 };
