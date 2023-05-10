@@ -1,11 +1,11 @@
 const sgMail = require('@sendgrid/mail');
 
 
-const sendMail = async (req,res)=>{
+const sendMail = async (id,mail)=>{
     try {
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-        const mail = req.params.mail
-        const link = 'http://localhost:4000/'
+        
+        const link = `http://localhost:4000/confirm/${id}`
         
         const msg = {
             to: `${mail}`,
