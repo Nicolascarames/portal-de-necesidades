@@ -6,16 +6,15 @@ const {
   getUser,
   loginUser,
   deleteUser,
-  addUser,
   newUser,
 } = require('../controllers');
 
-const { Upload, isUser } = require('../middleware');
+const { Upload, isUser, dataValidation } = require('../middleware');
 
 router.post('/login', loginUser);
 router.get('/getuser/:id', getUser);
 router.post('/addservice', isUser, Upload, AddService);
 router.post('/deleteuser/:id', isUser, deleteUser);
-router.post('/newUser', newUser);
+router.post('/newUser', dataValidation, newUser);
 
 module.exports = router;

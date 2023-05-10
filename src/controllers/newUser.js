@@ -1,29 +1,36 @@
 const getDb = require('../database/db');
 const Joi = require('joi');
+const { generateError } = require('../service/generateError');
 
-const newUser = (req, res) => {
-  console.log(req.body);
-  const schema = Joi.object().keys({
-    nombre: Joi.string().max(45).required(),
-    username: Joi.string().max(45).required(),
-    biografia: Joi.string().max(100),
-    avatar: Joi.string().max(45),
-    email: Joi.string().email().max(45).required(),
-    token: Joi.string().max(50),
-    pwd: Joi.string().min(8).max(45).required(),
-    active: Joi.number(),
-    role: Joi.string(),
-    delete: Joi.number(),
-    created_at: Joi.date().timestamp().required(),
-    update_at: Joi.date().timestamp(),
-  });
+const newUser = async (req, res, next) => {
+  try {
+    const conexion = await getDb();
+    const { nombre, username, biografia, avatar, email, pwd } = req.body;
 
-  const validation = schema.validate(req.body);
+    const [userExist] = await conexion.query(
+      `SELECT * FROM users WHERE email=?`,
+      [email]
+    );
+    if (userExist.length > 0) {
+      res.status(500).send('Usuario ya existe');
+    }
+    const [user] = await conexion.query(
+      `
+    INSERT INTO users (
+      nombre, username, biografia, avatar, email, pwd
+    ) VALUES (?,?,?,?,?,SHA2(?,512))
+    `,
+      [nombre, username, biografia, avatar, email, pwd]
+    );
 
-  if (validation.error) {
-    console.error(validation.error.message);
+    res.send({
+      status: 'ok',
+      menssage: 'Usuario creado correctamente',
+    });
+    conexion.release();
+  } catch (error) {
+    res.status(500).send(error);
   }
-  res.end();
 };
 
 module.exports = newUser;

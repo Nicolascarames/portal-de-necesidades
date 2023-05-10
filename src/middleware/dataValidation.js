@@ -13,17 +13,20 @@ const dataValidation = (req, res, next) => {
       active: Joi.number(),
       role: Joi.string(),
       delete: Joi.number(),
-      created_at: Joi.date().timestamp().required(),
+      created_at: Joi.date().timestamp(),
       update_at: Joi.date().timestamp(),
     });
 
     const validation = schema.validate(req.body);
+    console.log(validation);
+    if (validation.error) {
+      res.send(validation.error.message);
+      return;
+    }
 
     next();
   } catch (error) {
-    if (validation.error) {
-      console.error(validation.error.message);
-    }
+    res.send(error);
   }
 };
 
