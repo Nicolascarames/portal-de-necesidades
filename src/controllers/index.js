@@ -2,6 +2,7 @@ const AddService = require('./addService');
 const getUser = require('./getUser');
 const loginUser = require('./loginUser');
 const deleteUser = require('./deleteUser');
+const newUser = require('./newUser');
 const modifyPwd = require('./modifyPwd');
 
 module.exports = {
@@ -9,5 +10,6 @@ module.exports = {
   getUser,
   loginUser,
   deleteUser,
+  newUser,
   modifyPwd,
 };
