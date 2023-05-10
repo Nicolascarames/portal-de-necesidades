@@ -7,7 +7,7 @@ const loginUser = async (req, res) => {
     const conexion = await getDB();
 
     const { email, pwd } = req.body;
-
+    console.log(email,pwd)
     if (!email || !pwd) {
       res.status(400).send('faltan datos');
     }

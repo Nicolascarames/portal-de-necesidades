@@ -10,7 +10,7 @@ const AddService = async (req, res) => {
 
     if (!title || !description) {
       if (req.file) {
-        fs.unlinkSync(path.join(__dirname + '/../users/services' + req.file.filename)), (err) => { if (err) { console.log(err); return } };
+        fs.unlinkSync(path.join(__dirname + '/../users/services/' + req.file.filename)), (err) => { if (err) { console.log(err); return } };
         res.send('se necesita un titulo y una explicación para crear un nuevo servicio ');
         return
       }
