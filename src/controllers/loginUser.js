@@ -14,13 +14,14 @@ const loginUser = async (req, res) => {
 
     const [user] = await conexion.query(
       `
-            SELECT id, role, active
+            SELECT id, role
             FROM users
-            WHERE email = ? AND pwd = ?
+            WHERE email = ? AND pwd = SHA2(?,512)
             `,
       [email, pwd]
     );
 
+    console.log(user);
     if (user.length === 0) {
       return res.status(401).send('Email o pwd incorrentos');
     }
