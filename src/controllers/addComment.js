@@ -8,7 +8,7 @@ const addComment = async (req, res) => {
 
     const { service_id, comment} = req.body;
     const userId = req.isUser.id;
-    console.log(service_id)
+
 
     if (!service_id || !comment || !userId) {
       if (req.file) {
@@ -42,7 +42,7 @@ const addComment = async (req, res) => {
         
         const connection = await getDB();
         const [response] = await connection.query(`INSERT INTO comentarios(user_id,comentario,servicio_id) 
-        VALUES(?,?,? )`, [userId, comment,  service_id])
+        VALUES(?,?,?)`, [userId, comment,  service_id])
         connection.release();
         //conpruebo que la query se hizo correctamente
         response.affectedRows > 0 ?
