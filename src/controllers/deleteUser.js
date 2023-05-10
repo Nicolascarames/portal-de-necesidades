@@ -10,12 +10,13 @@ const deleteUser = async (req, res, next) => {
 
     if (req.isUser.id == id) {
       await conexion.query(
-        `SELECT * FROM  users`
-        // `
-        // UPDATE users
-        // SET deleted=1, lastUpdate=?
-        // WHERE id=?
-        // `[(new Date(), id)]
+        // `SELECT * FROM  users`
+        `
+        UPDATE users
+        SET deleted=1, updated_at=?
+        WHERE id=?
+        `,
+        [new Date(), id]
       );
 
       res.send({
