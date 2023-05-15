@@ -20,6 +20,7 @@ const {
   dataValidation,
   UploadComm,
   confirmMail,
+  UploadAvatar,
 } = require('../middleware');
 
 router.post('/login', loginUser);
@@ -32,6 +33,6 @@ router.post('/newUser', dataValidation, newUser);
 router.post('/modifyPwd/:id', isUser, modifyPwd);
 router.get('/confirm/:id', confirmMail);
 router.get('/services', getServices);
-router.post('/modifyUser/:id', modifyUser);
+router.post('/modifyUser',isUser,UploadAvatar, modifyUser);
 
 module.exports = router;
