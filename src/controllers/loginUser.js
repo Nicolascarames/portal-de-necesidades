@@ -1,20 +1,21 @@
 const getDB = require('../database/db');
 const tokenJson = require('jsonwebtoken');
+const { generateError } = require('../service/generateError');
 require('dotenv').config();
 
-const loginUser = async (req, res) => {
+const loginUser = async (req, res, next) => {
   try {
     const conexion = await getDB();
 
     const { email, pwd } = req.body;
-    console.log(email,pwd)
+    console.log(email, pwd);
     if (!email || !pwd) {
       res.status(400).send('faltan datos');
     }
 
     const [user] = await conexion.query(
       `
-            SELECT id, role
+            SELECT id, role, active
             FROM users
             WHERE email = ? AND pwd = SHA2(?,512)
             `,
@@ -31,7 +32,12 @@ const loginUser = async (req, res) => {
     const info = {
       id: user[0].id,
       role: user[0].role,
+      active: user[0].active,
     };
+
+    if (info.active === 0) {
+      throw generateError('usuario no activado', 409);
+    }
 
     const token = tokenJson.sign(info, process.env.secret_token, {
       expiresIn: '1d',
@@ -47,7 +53,7 @@ const loginUser = async (req, res) => {
     conexion.release();
   } catch (error) {
     console.error(error);
-    res.status(400).send(error);
+    next(error);
   }
 };
 

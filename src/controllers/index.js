@@ -6,6 +6,7 @@ const sendMail = require('./sendMail');
 const addComment = require('./addComment');
 const newUser = require('./newUser');
 const modifyPwd = require('./modifyPwd');
+const getServices = require('./getServices');
 
 module.exports = {
   AddService,
@@ -16,4 +17,5 @@ module.exports = {
   addComment,
   newUser,
   modifyPwd,
+  getServices,
 };

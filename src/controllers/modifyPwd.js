@@ -12,7 +12,7 @@ const modifyPwd = async (req, res, next) => {
       `
             SELECT id
             FROM users
-            WHERE id=? AND pwd=?
+            WHERE id=? AND pwd=SHA2(?,512)
             `,
       [id, pwdVieja]
     );
@@ -24,7 +24,7 @@ const modifyPwd = async (req, res, next) => {
     await conexion.query(
       `
         UPDATE users
-        SET pwd=?, updated_at=?
+        SET pwd=SHA2(?,512), updated_at=?
         WHERE id=?
         `,
       [pwdNueva, new Date(), id]
