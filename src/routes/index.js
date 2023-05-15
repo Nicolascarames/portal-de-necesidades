@@ -11,6 +11,7 @@ const {
   getServices,
   newUser,
   modifyPwd,
+  modifyUser,
 } = require('../controllers');
 
 const {
@@ -31,5 +32,6 @@ router.post('/newUser', dataValidation, newUser);
 router.post('/modifyPwd/:id', isUser, modifyPwd);
 router.get('/confirm/:id', confirmMail);
 router.get('/services', getServices);
+router.post('/modifyUser/:id', modifyUser);
 
 module.exports = router;

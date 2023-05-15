@@ -7,6 +7,7 @@ const addComment = require('./addComment');
 const newUser = require('./newUser');
 const modifyPwd = require('./modifyPwd');
 const getServices = require('./getServices');
+const modifyUser = require('./modifyUser');
 
 module.exports = {
   AddService,
@@ -18,4 +19,5 @@ module.exports = {
   newUser,
   modifyPwd,
   getServices,
+  modifyUser,
 };
