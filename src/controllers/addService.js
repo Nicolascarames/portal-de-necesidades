@@ -1,18 +1,28 @@
 const getDB = require('../database/db');
-const fs = require('fs')
-const path = require('path')
+const fs = require('fs');
+const path = require('path');
+const { generateError } = require('../service/generateError');
 
-const AddService = async (req, res) => {
-
+const AddService = async (req, res, next) => {
   try {
-
     const { title, description } = req.body;
 
     if (!title || !description) {
+      throw generateError('Falta titulo o descripcion', 500);
+    }
+
+    if (!title || !description) {
       if (req.file) {
-        fs.unlinkSync(path.join(__dirname + '/../users/services/' + req.file.filename)), (err) => { if (err) { console.log(err); return } };
-        res.send('se necesita un titulo y una explicación para crear un nuevo servicio ');
-        return
+        fs.unlinkSync(
+          path.join(__dirname + '/../users/services/' + req.file.filename)
+        ),
+          (err) => {
+            if (err) {
+              console.log(err);
+              return;
+            }
+          };
+        throw generateError('Falta titulo o descripcion', 500);
       }
     } else {
       if (req.file) {
@@ -21,32 +31,40 @@ const AddService = async (req, res) => {
         const userId = req.isUser.id;
         const connection = await getDB();
 
-        const [response] = await connection.query(`INSERT INTO servicios(titulo,descripcion,fichero,user_id) VALUES(?,?,?,? )`, [title, description, fileName, userId])
+        const [response] = await connection.query(
+          `INSERT INTO servicios(titulo,descripcion,fichero,user_id) VALUES(?,?,?,? )`,
+          [title, description, fileName, userId]
+        );
         connection.release();
 
         //conpruebo que la query se hizo correctamente
 
-        response.affectedRows > 0 ?
-          res.send(`servicio creado corectamente!`) :
-          res.send('Problema con la conexión con la base de datos :( porfavor,vuelve a intentarlo');
-
+        response.affectedRows > 0
+          ? res.send(`servicio creado corectamente!`)
+          : res.send(
+              'Problema con la conexión con la base de datos :( porfavor,vuelve a intentarlo'
+            );
       } else {
         //si solo  hay un titulo y una descripcion guardo las dos  en la tabla servicios sin la imagen
 
         const userId = req.isUser.id;
         const connection = await getDB();
-        const [response] = await connection.query(`INSERT INTO servicios(titulo,descripcion,user_id) VALUES(?,?,?)`, [title, description, userId])
+        const [response] = await connection.query(
+          `INSERT INTO servicios(titulo,descripcion,user_id) VALUES(?,?,?)`,
+          [title, description, userId]
+        );
         connection.release();
         //conpruebo que la query se hizo correctamente
-        response.affectedRows > 0 ?
-          res.send(`servicio creado corectamente!`) :
-          res.send('Problema con la conexión con la base de datos :( porfavor,vuelve a intentarlo')
-
+        response.affectedRows > 0
+          ? res.send(`servicio creado corectamente!`)
+          : res.send(
+              'Problema con la conexión con la base de datos :( porfavor,vuelve a intentarlo'
+            );
       }
     }
-
   } catch (error) {
     console.log(error);
+    next(error);
   }
 };
 

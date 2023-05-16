@@ -12,7 +12,7 @@ const newUser = async (req, res, next) => {
       [email]
     );
     if (userExist.length > 0) {
-      res.status(500).send('Usuario ya existe');
+      throw generateError('El usuario ya existe', 500);
     }
     const [user] = await conexion.query(
       `
@@ -32,14 +32,15 @@ const newUser = async (req, res, next) => {
 
     res.send({
       status: 'ok',
-      menssage: 'Usuario creado correctamente',
+      menssage:
+        'Usuario creado correctamente, revisa tu email para la confirmacion',
     });
 
     sendMail(getIdUser[0].id, email);
 
     conexion.release();
   } catch (error) {
-    res.status(500).send(error);
+    next(error);
   }
 };
 
