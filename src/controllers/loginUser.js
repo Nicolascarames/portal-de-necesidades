@@ -44,7 +44,7 @@ const loginUser = async (req, res, next) => {
       role: user[0].role,
     };
 
-    if (info.active === 0) {
+    if (usuario.active === 0) {
       throw generateError('usuario no activado', 409);
     }
 

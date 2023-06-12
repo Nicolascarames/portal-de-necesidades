@@ -37,6 +37,14 @@ const isUser = async (req, res, next) => {
       throw generateError('usuario modificado despues de generar token', 401);
     }
 
+    if (user[0].active === 0) {
+      throw generateError(
+        'usuario no activado, porfabor revisar email de confirmacion',
+        401
+      );
+    }
+    console.log(user[0].active);
+
     //meto info del token en req para usarla en controllers
     req.isUser = token;
 
