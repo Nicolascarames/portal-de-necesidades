@@ -4,6 +4,7 @@ const path = require('path');
 const { generateError } = require('../service/generateError');
 
 const AddService = async (req, res, next) => {
+  let connection;
   try {
     const { title, description } = req.body;
 
@@ -29,7 +30,7 @@ const AddService = async (req, res, next) => {
         //si hay un titulo , descripcion ,file guardo el todo en la tabla servicios
         const fileName = req.file.filename;
         const userId = req.isUser.id;
-        const connection = await getDB();
+        connection = await getDB();
 
         const [response] = await connection.query(
           `INSERT INTO servicios(titulo,descripcion,fichero,user_id) VALUES(?,?,?,? )`,
@@ -39,11 +40,17 @@ const AddService = async (req, res, next) => {
 
         //conpruebo que la query se hizo correctamente
 
-        response.affectedRows > 0
-          ? res.send(`servicio creado corectamente!`)
-          : res.send(
-              'Problema con la conexión con la base de datos :( porfavor,vuelve a intentarlo'
-            );
+        if (response.affectedRows > 0) {
+          res.send({
+            message: `servicio creado corectamente!`,
+            data: response,
+          });
+        } else {
+          res.send({
+            message:
+              'Problema con la conexión con la base de datos :( porfavor,vuelve a intentarlo',
+          });
+        }
       } else {
         //si solo  hay un titulo y una descripcion guardo las dos  en la tabla servicios sin la imagen
 
@@ -63,8 +70,10 @@ const AddService = async (req, res, next) => {
       }
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     next(error);
+  } finally {
+    if (connection) connection.release();
   }
 };
 

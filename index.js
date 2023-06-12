@@ -1,8 +1,8 @@
+const env = require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const app = express();
-const env = require('dotenv').config();
 const path = require('path');
 const router = require('./src/routes/index');
 

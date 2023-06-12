@@ -1,13 +1,17 @@
 const getDB = require('../database/db');
 
-const getUser = async (req, res) => {
+const getUser = async (req, res, next) => {
+  let conexion;
   try {
-    const { id } = req.params;
-    const conexion = await getDB();
+    conexion = await getDB();
 
-    const [user] = await conexion.query(`SELECT * FROM users WHERE id = ?`, [
-      id,
-    ]);
+    const { id } = req.isUser;
+
+    const [user] = await conexion.query(
+      `SELECT id, nombre, username, email, active, role
+    FROM users WHERE id = ?`,
+      [id]
+    );
 
     if (user.length) {
       return res.send({
@@ -15,11 +19,14 @@ const getUser = async (req, res) => {
         data: user,
       });
     } else {
-      res.status(400).send('usuario no encontrado');
+      res.status(404).send('usuario no encontrado');
     }
     conexion.release();
   } catch (error) {
-    console.error(error);
+    // console.error(error);
+    next(error);
+  } finally {
+    if (conexion) conexion.release();
   }
 };
 

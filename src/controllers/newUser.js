@@ -1,10 +1,10 @@
 const getDb = require('../database/db');
-const Joi = require('joi');
 const { generateError } = require('../service/generateError');
 const sendMail = require('../controllers/sendMail');
 const newUser = async (req, res, next) => {
+  let conexion;
   try {
-    const conexion = await getDb();
+    conexion = await getDb();
     const { nombre, username, biografia, avatar, email, pwd } = req.body;
 
     const [userExist] = await conexion.query(
@@ -28,7 +28,7 @@ const newUser = async (req, res, next) => {
       [email]
     );
 
-    console.log(getIdUser);
+    // console.log(getIdUser);
 
     res.send({
       status: 'ok',
@@ -41,6 +41,8 @@ const newUser = async (req, res, next) => {
     conexion.release();
   } catch (error) {
     next(error);
+  } finally {
+    if (conexion) conexion.release();
   }
 };
 

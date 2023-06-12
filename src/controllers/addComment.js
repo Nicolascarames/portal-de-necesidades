@@ -4,6 +4,7 @@ const path = require('path');
 const { generateError } = require('../service/generateError');
 
 const addComment = async (req, res, next) => {
+  let connection;
   try {
     const { service_id, comment } = req.body;
     const userId = req.isUser.id;
@@ -32,7 +33,7 @@ const addComment = async (req, res, next) => {
 
         console.log(req.file);
 
-        const connection = await getDB();
+        connection = await getDB();
 
         const [response] = await connection.query(
           `INSERT INTO comentarios(user_id,comentario,fichero_comentario,servicio_id) 
@@ -69,8 +70,10 @@ const addComment = async (req, res, next) => {
       }
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     next(error);
+  } finally {
+    if (connection) connection.release();
   }
 };
 

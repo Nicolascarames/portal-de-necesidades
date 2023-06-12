@@ -24,7 +24,7 @@ const {
 } = require('../middleware');
 
 router.post('/login', loginUser);
-router.get('/getuser/:id', getUser);
+router.get('/getuser', isUser, getUser);
 router.post('/addservice', isUser, Upload, AddService);
 router.post('/newcomment', isUser, UploadComm, addComment);
 router.post('/deleteuser/:id', isUser, deleteUser);
@@ -33,6 +33,6 @@ router.post('/newUser', dataValidation, newUser);
 router.post('/modifyPwd/:id', isUser, modifyPwd);
 router.get('/confirm/:id', confirmMail);
 router.get('/services', getServices);
-router.post('/modifyUser',isUser,UploadAvatar, modifyUser);
+router.post('/modifyUser', isUser, UploadAvatar, modifyUser);
 
 module.exports = router;

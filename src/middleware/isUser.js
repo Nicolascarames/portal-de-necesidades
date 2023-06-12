@@ -1,7 +1,10 @@
+require('dotenv').config();
+const getDB = require('../database/db');
 const jwt = require('jsonwebtoken');
 const { generateError } = require('../service/generateError');
 
-const isUser = (req, res, next) => {
+const isUser = async (req, res, next) => {
+  let conexion;
   try {
     const { authorization } = req.headers;
 
@@ -16,10 +19,26 @@ const isUser = (req, res, next) => {
       throw generateError('token incorrecto', 401);
     }
 
+    // console.log(token);
+    conexion = await getDB();
+
+    const [user] = await conexion.query(
+      `SELECT id, nombre, username, email, active, role, updated_at, deleted
+    FROM users WHERE id = ?`,
+      [token.id]
+    );
+
+    const ultimafecha = user[0].updated_at;
+    const fechatoken = token.fecha;
+    const tokenfecha = new Date(fechatoken);
+    // console.log(ultimafecha.getTime());
+    // console.log(tokenfecha.getTime());
+    if (ultimafecha.getTime() < tokenfecha.getTime()) {
+      throw generateError('usuario modificado despues de generar token', 401);
+    }
+
     //meto info del token en req para usarla en controllers
     req.isUser = token;
-
-    // console.log(token);
 
     next();
   } catch (error) {

@@ -1,19 +1,18 @@
+require('dotenv').config();
 const sgMail = require('@sendgrid/mail');
 
+const sendMail = async (id, mail) => {
+  try {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+    const link = `http://localhost:4000/confirm/${id}`;
 
-const sendMail = async (id,mail)=>{
-    try {
-        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-        
-        const link = `http://localhost:4000/confirm/${id}`
-        
-        const msg = {
-            to: `${mail}`,
-            from: 'habgrupoe@gmail.com', // Use the email address or domain you verified above
-            subject: 'Email de confirmación de el grupo e',
-            text: 'test mail que contendrá el link de activación de usuario ',
-            html: `<!DOCTYPE html>
+    const msg = {
+      to: `${mail}`,
+      from: 'habgrupoe@gmail.com', // Use the email address or domain you verified above
+      subject: 'Email de confirmación de el grupo e',
+      text: 'test mail que contendrá el link de activación de usuario ',
+      html: `<!DOCTYPE html>
 
             <html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
             <head>
@@ -380,21 +379,20 @@ const sendMail = async (id,mail)=>{
             </table>
             </body>
             </html>`,
-           
-          };
-          
-          sgMail
-            .send(msg)
-            .then(() => {}, error => {
-              console.error(error);
-          
-              if (error.response) {
-               return error.response.body
-              }
-            })
-    } catch (error) {
-        console.log(error)
-    }
-   
-}
-module.exports = sendMail
+    };
+
+    sgMail.send(msg).then(
+      () => {},
+      (error) => {
+        console.error(error);
+
+        if (error.response) {
+          return error.response.body;
+        }
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+module.exports = sendMail;

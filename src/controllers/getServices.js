@@ -1,11 +1,9 @@
-
-
 const getDB = require('../database/db');
 
-const getServices = async (req, res) => {
+const getServices = async (req, res, next) => {
+  let conexion;
   try {
-    
-    const conexion = await getDB();
+    conexion = await getDB();
 
     const [user] = await conexion.query(`SELECT * FROM servicios `);
 
@@ -19,7 +17,10 @@ const getServices = async (req, res) => {
     }
     conexion.release();
   } catch (error) {
-    console.error(error);
+    // console.error(error);
+    next(error);
+  } finally {
+    if (conexion) conexion.release();
   }
 };
 

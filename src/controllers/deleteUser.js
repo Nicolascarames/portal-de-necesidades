@@ -2,9 +2,10 @@ const getDb = require('../database/db');
 const { generateError } = require('../service/generateError');
 
 const deleteUser = async (req, res, next) => {
+  let conexion;
   try {
     const { id } = req.params;
-    const conexion = await getDb();
+    conexion = await getDb();
 
     // console.log(req.isUser.id, id);
 
@@ -30,6 +31,8 @@ const deleteUser = async (req, res, next) => {
     conexion.release();
   } catch (error) {
     next(error);
+  } finally {
+    if (conexion) conexion.release();
   }
 };
 

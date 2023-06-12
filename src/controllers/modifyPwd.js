@@ -2,11 +2,11 @@ const getDb = require('../database/db');
 const { generateError } = require('../service/generateError');
 
 const modifyPwd = async (req, res, next) => {
+  let conexion;
   try {
-    const conexion = await getDb();
-
+    conexion = await getDb();
     const { pwdVieja, pwdNueva } = req.body;
-    const { id } = req.params;
+    const { id } = req.isUser;
 
     const [user] = await conexion.query(
       `
@@ -38,6 +38,8 @@ const modifyPwd = async (req, res, next) => {
     });
   } catch (error) {
     next(error);
+  } finally {
+    if (conexion) conexion.release();
   }
 };
 
