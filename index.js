@@ -24,7 +24,7 @@ app.use((error, req, res, next) => {
   console.error(error);
 
   res.status(error.httpStatus || 500).send({
-    status: 'error',
+    status: error.httpStatus,
     message: error.message,
   });
 });

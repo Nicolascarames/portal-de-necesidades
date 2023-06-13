@@ -25,7 +25,7 @@ const loginUser = async (req, res, next) => {
 
     // console.log(user);
     if (user.length === 0) {
-      return res.status(401).send('Email o pwd incorrentos');
+      throw generateError('Email o pwd incorrentos', 401);
     }
 
     // token
