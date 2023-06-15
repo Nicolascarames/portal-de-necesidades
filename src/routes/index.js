@@ -31,7 +31,7 @@ router.post('/deleteuser/:id', isUser, deleteUser);
 router.get('/mail/:mail', sendMail);
 router.post('/newUser', dataValidation, newUser);
 router.post('/modifyPwd/:id', isUser, modifyPwd);
-router.get('/confirm/:id', confirmMail);
+router.get('/confirm/:code', confirmMail);
 router.get('/services', getServices);
 router.post('/modifyUser', isUser, UploadAvatar, modifyUser);
 

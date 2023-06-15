@@ -55,12 +55,9 @@ const loginUser = async (req, res, next) => {
     res.status(200).send({
       status: 'ok',
       message: 'login',
-      data: {
-        token,
-      },
-      usuario: usuario,
+      token:token,
+      username: usuario.username,
     });
-    conexion.release();
   } catch (error) {
     // console.error(error);
     next(error);

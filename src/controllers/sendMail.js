@@ -1,11 +1,11 @@
 require('dotenv').config();
 const sgMail = require('@sendgrid/mail');
 
-const sendMail = async (id, mail) => {
+const sendMail = async (code, mail) => {
   try {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-    const link = `http://localhost:4000/confirm/${id}`;
+    const link = `http://localhost:4000/confirm/${code}`;
 
     const msg = {
       to: `${mail}`,

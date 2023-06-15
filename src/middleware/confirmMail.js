@@ -5,7 +5,7 @@ const confirmMail = async (req, res, next) => {
   try {
     connection = await getDB();
     const [response] = await connection.query(
-      `UPDATE  users SET active ='1' WHERE id = '${req.params.id}'`
+      `UPDATE  users SET active ='1' WHERE act_code = '${req.params.code}'`
     );
     // console.log(response);
     if (response.affectedRows > 0) {
@@ -14,7 +14,7 @@ const confirmMail = async (req, res, next) => {
       res.send('Algo ha ido mal :( ');
     }
   } catch (error) {
-    // console.log(error)
+   console.log(error)
     next(error);
   } finally {
     if (connection) connection.release();

@@ -15,13 +15,13 @@ const dataValidation = (req, res, next) => {
     const validation = schema.validate(req.body);
     console.log(validation);
     if (validation.error) {
-      res.send(validation.error.message);
+      res.status(403).send({message:validation.error});
       return;
     }
 
     next();
   } catch (error) {
-    res.send(error);
+    res.status(403).send({message:error});
   }
 };
 
