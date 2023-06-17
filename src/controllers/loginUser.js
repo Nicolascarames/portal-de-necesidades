@@ -60,7 +60,6 @@ const loginUser = async (req, res, next) => {
       },
       usuario: usuario,
     });
-    conexion.release();
   } catch (error) {
     // console.error(error);
     next(error);

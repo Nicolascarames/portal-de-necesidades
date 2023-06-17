@@ -33,7 +33,7 @@ const isUser = async (req, res, next) => {
     const tokenfecha = new Date(fechatoken);
     // console.log(ultimafecha.getTime());
     // console.log(tokenfecha.getTime());
-    if (ultimafecha.getTime() < tokenfecha.getTime()) {
+    if (ultimafecha.getTime() > tokenfecha.getTime()) {
       throw generateError('usuario modificado despues de generar token', 401);
     }
 

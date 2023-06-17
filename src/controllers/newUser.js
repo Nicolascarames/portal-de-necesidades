@@ -17,10 +17,10 @@ const newUser = async (req, res, next) => {
     const [user] = await conexion.query(
       `
     INSERT INTO users (
-      nombre, username, biografia, avatar, email, pwd
-    ) VALUES (?,?,?,?,?,SHA2(?,512))
+      nombre, username, biografia, avatar, email, pwd, updated_at
+    ) VALUES (?,?,?,?,?,SHA2(?,512),?)
     `,
-      [nombre, username, biografia, avatar, email, pwd]
+      [nombre, username, biografia, avatar, email, pwd, new Date()]
     );
 
     const [getIdUser] = await conexion.query(
@@ -37,8 +37,6 @@ const newUser = async (req, res, next) => {
     });
 
     sendMail(getIdUser[0].id, email);
-
-    conexion.release();
   } catch (error) {
     next(error);
   } finally {

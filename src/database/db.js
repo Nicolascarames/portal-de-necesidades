@@ -1,11 +1,12 @@
 const env = require('dotenv').config();
 const mysql = require('mysql2/promise');
 
-const host = process.env.hos || 'localhost';
+const host = process.env.host || 'localhost';
 const user = process.env.user || 'root';
 const password = process.env.password || 'root';
 const database = process.env.database || 'portal-de-necesidades';
 const port = process.env.port || 3306;
+// console.log(host, user, password, database, port);
 
 let pool;
 
