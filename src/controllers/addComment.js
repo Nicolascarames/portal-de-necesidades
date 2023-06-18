@@ -36,19 +36,19 @@ const addComment = async (req, res, next) => {
         connection = await getDB();
 
         const [response] = await connection.query(
-          `INSERT INTO comentarios(user_id,comentario,fichero_comentario,servicio_id) 
+          `INSERT INTO comentarios(users_id,comentario,fichero_comentario,servicios_id) 
         VALUES(?,?,?,? )`,
           [userId, comment, fileName, service_id]
         );
-        connection.release();
 
         //conpruebo que la query se hizo correctamente
 
         response.affectedRows > 0
-          ? res.send(`comentario añadido correctamente`)
-          : res.send(
-              'Problema con la conexión con la base de datos :( porfavor,vuelve a intentarlo'
-            );
+          ? res.send({ message: `comentario añadido correctamente` })
+          : res.send({
+              message:
+                'Problema con la conexión con la base de datos :( porfavor,vuelve a intentarlo',
+            });
       } else {
         //si solo  hay un titulo y una descripcion guardo las dos  en la tabla servicios sin la imagen
 
@@ -56,17 +56,18 @@ const addComment = async (req, res, next) => {
 
         const connection = await getDB();
         const [response] = await connection.query(
-          `INSERT INTO comentarios(user_id,comentario,servicio_id) 
+          `INSERT INTO comentarios(users_id,comentario,servicios_id) 
         VALUES(?,?,?)`,
           [userId, comment, service_id]
         );
-        connection.release();
+
         //conpruebo que la query se hizo correctamente
         response.affectedRows > 0
-          ? res.send(`comentario añadido correctamente`)
-          : res.send(
-              'Problema con la conexión con la base de datos :( porfavor,vuelve a intentarlo'
-            );
+          ? res.send({ message: `comentario añadido correctamente` })
+          : res.send({
+              message:
+                'Problema con la conexión con la base de datos :( porfavor,vuelve a intentarlo',
+            });
       }
     }
   } catch (error) {

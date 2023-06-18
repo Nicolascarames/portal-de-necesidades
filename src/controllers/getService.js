@@ -11,10 +11,16 @@ const getService = async (req, res, next) => {
       [idService]
     );
 
+    const [coments] = await conexion.query(
+      `SELECT * FROM comentarios WHERE servicios_id=?;`,
+      [idService]
+    );
+
     if (service.length) {
       return res.send({
         status: 'ok',
-        data: service,
+        dataService: service,
+        dataComents: coments,
       });
     } else {
       res.status(400).send('servicio no encontrado');
