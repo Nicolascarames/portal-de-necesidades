@@ -33,7 +33,7 @@ const AddService = async (req, res, next) => {
         connection = await getDB();
 
         const [response] = await connection.query(
-          `INSERT INTO servicios(titulo,descripcion,fichero,user_id) VALUES(?,?,?,? )`,
+          `INSERT INTO servicios(titulo,descripcion,fichero,users_id) VALUES(?,?,?,? )`,
           [title, description, fileName, userId]
         );
         connection.release();
@@ -57,13 +57,16 @@ const AddService = async (req, res, next) => {
         const userId = req.isUser.id;
         const connection = await getDB();
         const [response] = await connection.query(
-          `INSERT INTO servicios(titulo,descripcion,user_id) VALUES(?,?,?)`,
+          `INSERT INTO servicios(titulo,descripcion,users_id) VALUES(?,?,?)`,
           [title, description, userId]
         );
         connection.release();
         //conpruebo que la query se hizo correctamente
         response.affectedRows > 0
-          ? res.send(`servicio creado corectamente!`)
+          ? res.send({
+              msg: 'servicio creado correctamente',
+              id_servicio: response.insertId,
+            })
           : res.send(
               'Problema con la conexión con la base de datos :( porfavor,vuelve a intentarlo'
             );

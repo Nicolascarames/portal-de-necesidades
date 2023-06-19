@@ -8,7 +8,8 @@ const newUser = require('./newUser');
 const modifyPwd = require('./modifyPwd');
 const getServices = require('./getServices');
 const modifyUser = require('./modifyUser');
-
+const imgLink = require('./imgLink')
+const getUserDet = require('./getUserDet')
 module.exports = {
   AddService,
   getUser,
@@ -20,4 +21,6 @@ module.exports = {
   modifyPwd,
   getServices,
   modifyUser,
+  imgLink,
+  getUserDet
 };

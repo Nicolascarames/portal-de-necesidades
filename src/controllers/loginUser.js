@@ -16,7 +16,7 @@ const loginUser = async (req, res, next) => {
 
     const [user] = await conexion.query(
       `
-            SELECT id, nombre, username, email, active, role
+            SELECT id, nombre, username, email, active, role,avatar
             FROM users
             WHERE email = ? AND pwd = SHA2(?,512)
             `,
@@ -42,6 +42,7 @@ const loginUser = async (req, res, next) => {
       email: user[0].email,
       active: user[0].active,
       role: user[0].role,
+      avatar:user[0].avatar
     };
 
     if (usuario.active === 0) {
@@ -57,6 +58,8 @@ const loginUser = async (req, res, next) => {
       message: 'login',
       token:token,
       username: usuario.username,
+      avatar:usuario.avatar,
+      id:usuario.id
     });
   } catch (error) {
     // console.error(error);

@@ -1,11 +1,17 @@
 const getDB = require('../database/db');
 
-const getServices = async (req, res, next) => {
+const getUserDet = async (req, res, next) => {
   let conexion;
   try {
     conexion = await getDB();
 
-    const [user] = await conexion.query(`SELECT * FROM servicios `);
+    const id = req.params.id;
+
+    const [user] = await conexion.query(
+      `SELECT   username,  avatar
+    FROM users WHERE id = ?`,
+      [id]
+    );
 
     if (user.length) {
       return res.send({
@@ -13,7 +19,7 @@ const getServices = async (req, res, next) => {
         data: user,
       });
     } else {
-      res.status(400).send('servicios no encontrado');
+      res.status(404).send('usuario no encontrado');
     }
   } catch (error) {
     // console.error(error);
@@ -23,4 +29,4 @@ const getServices = async (req, res, next) => {
   }
 };
 
-module.exports = getServices;
+module.exports = getUserDet;

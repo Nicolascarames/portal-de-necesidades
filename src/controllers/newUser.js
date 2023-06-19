@@ -47,7 +47,6 @@ const newUser = async (req, res, next) => {
 
     sendMail(getCodeUser[0].act_code, email);
 
-    conexion.release();
   } catch (error) {
     next(error);
   } finally {

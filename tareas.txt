@@ -100,7 +100,7 @@ response.affectedRows > 0
 );
 solo poniéndolo fuera del if/else no duplicaríamos código.
 
-- 🅰️ modificar bd matt 🅰️ falta requisito: Marcar un servicio requerido como ya resuelto. Solo el propietario del servicio podría ponerlo como resuelto (gestionar BOOLEAN en DB) luego según los que tenéis pensado de vuestra plataforma: marcar servicio como resuelto en el front pero dejar a los usuarios la posibilidad de comentar y subir soluciones (más fácil) o permitir comentarios pero no subida de ficheros.
+- ✅ modificar bd ✅ falta requisito: Marcar un servicio requerido como ya resuelto. Solo el propietario del servicio podría ponerlo como resuelto (gestionar BOOLEAN en DB) luego según los que tenéis pensado de vuestra plataforma: marcar servicio como resuelto en el front pero dejar a los usuarios la posibilidad de comentar y subir soluciones (más fácil) o permitir comentarios pero no subida de ficheros.
 
 - ✅ ahora isUser comprueba fechas de update user y creacion token ✅ si elimino usuario y tengo el token no caducado podría seguir utilizando la API. Hacer comprobación en middleware isUser. También si cambio pwd tendríamos que invalidar el token (ej en https://gitlab.com/blueoceanstart/hack-a-boss/jsb18rt/tutorias/-/blob/main/08052023_repasoExpress/diarioDeViajes)
 

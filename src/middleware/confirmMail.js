@@ -5,7 +5,7 @@ const confirmMail = async (req, res, next) => {
   try {
     connection = await getDB();
     const [response] = await connection.query(
-      `UPDATE  users SET active ='1' WHERE act_code = '${req.params.code}'`
+      `UPDATE  users SET active ='1',updated_at = NOW() WHERE act_code = '${req.params.code}'`
     );
     // console.log(response);
     if (response.affectedRows > 0) {

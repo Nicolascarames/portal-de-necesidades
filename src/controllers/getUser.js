@@ -8,7 +8,7 @@ const getUser = async (req, res, next) => {
     const { id } = req.isUser;
 
     const [user] = await conexion.query(
-      `SELECT id, nombre, username, email, active, role
+      `SELECT id, nombre, username, email,biografia, avatar, role 
     FROM users WHERE id = ?`,
       [id]
     );
@@ -21,7 +21,6 @@ const getUser = async (req, res, next) => {
     } else {
       res.status(404).send('usuario no encontrado');
     }
-    conexion.release();
   } catch (error) {
     // console.error(error);
     next(error);

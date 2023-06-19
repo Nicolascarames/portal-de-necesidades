@@ -5,6 +5,7 @@ const { generateError } = require('../service/generateError');
 
 const isUser = async (req, res, next) => {
   let conexion;
+  
   try {
     const { authorization } = req.headers;
 
@@ -33,13 +34,13 @@ const isUser = async (req, res, next) => {
     const tokenfecha = new Date(fechatoken);
     // console.log(ultimafecha.getTime());
     // console.log(tokenfecha.getTime());
-    if (ultimafecha.getTime() < tokenfecha.getTime()) {
+    if (ultimafecha.getTime() > tokenfecha.getTime()) {
       throw generateError('usuario modificado despues de generar token', 401);
     }
 
     if (user[0].active === 0) {
       throw generateError(
-        'usuario no activado, porfabor revisar email de confirmacion',
+        'usuario no activado, porfavor revisa el correo de confirmacion',
         401
       );
     }
