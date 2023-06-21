@@ -8,6 +8,7 @@ const router = require('./src/routes/index');
 
 app.use(morgan('dev'));
 app.use(cors());
+app.use('/files', express.static('./src/users'));
 app.use(express.json());
 app.use(router);
 
