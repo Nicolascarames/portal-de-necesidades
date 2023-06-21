@@ -4,8 +4,24 @@ const getServices = async (req, res, next) => {
   let conexion;
   try {
     conexion = await getDB();
-
-    const [user] = await conexion.query(`SELECT * FROM servicios `);
+    const order = req.params.order;
+    let orderquery;
+    if(order === 'newest'){
+      orderquery = 'create_at'
+    }else if(order === 'likes'){
+      orderquery = 'likes'
+    }
+    else if(order === 'comments'){
+      orderquery = 'comentarios'
+    }
+    else if(order === 'done'){
+      orderquery = 'finalizado'
+    }
+    const [user] = await conexion.query(
+      `SELECT * ,
+      (SELECT avatar FROM users WHERE id = users_id) AS avatar,
+      (SELECT COUNT(*) FROM comentarios WHERE idservicios = servicios_id ) AS comentarios,
+      (SELECT COUNT(*) FROM likes_servicios WHERE idservicios = servicios_id ) AS likes FROM servicios ORDER BY ${orderquery} DESC;`);
 
     if (user.length) {
       return res.send({

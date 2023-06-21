@@ -35,9 +35,10 @@ router.get('/mail/:mail', sendMail);
 router.post('/newUser', dataValidation, newUser);
 router.post('/modifyPwd/:id', isUser, modifyPwd);
 router.get('/confirm/:code', confirmMail);
-router.get('/services', getServices);
+router.get('/services/:order', getServices);
 router.get('/service/:id', getService);
 router.post('/modifyUser', isUser, UploadAvatar, modifyUser);
 router.get('/img/link/:id',imgLink)
 router.get('/userdet/:id',getUserDet)
+
 module.exports = router;

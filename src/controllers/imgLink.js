@@ -6,7 +6,11 @@ const imgLink = async (req, res) => {
   const  id  = req.params.id;
 try {
     const img = fs.readFileSync(path.join(__dirname + '/../users/' + id))
-    if(!img){res.send('imagen no encontrada')}
+    if(!img)
+    {res.send('imagen no encontrada')}
+    else{
+      
+    }
      res.end(img)
 
 } catch (error) {
