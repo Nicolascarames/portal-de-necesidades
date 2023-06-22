@@ -20,6 +20,7 @@ const getServices = async (req, res, next) => {
     const [user] = await conexion.query(
       `SELECT * ,
       (SELECT avatar FROM users WHERE id = users_id) AS avatar,
+      (SELECT username FROM users WHERE id = users_id) AS owner,
       (SELECT COUNT(*) FROM comentarios WHERE idservicios = servicios_id ) AS comentarios,
       (SELECT COUNT(*) FROM likes_servicios WHERE idservicios = servicios_id ) AS likes FROM servicios ORDER BY ${orderquery} DESC;`);
 

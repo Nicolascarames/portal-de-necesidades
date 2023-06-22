@@ -10,13 +10,9 @@ const addComment = async (req, res, next) => {
     const userId = req.isUser.id;
 
     if (!service_id || !comment || !userId) {
-      throw generateError('Falta titulo o descripcion', 500);
-    }
-
-    if (!service_id || !comment || !userId) {
       if (req.file) {
         fs.unlinkSync(
-          path.join(__dirname + '/../users/comments/' + req.file.filename)
+          path.join(__dirname + '/../users/' + req.file.filename)
         ),
           (err) => {
             if (err) {
@@ -30,7 +26,9 @@ const addComment = async (req, res, next) => {
       if (req.file) {
         //si hay un titulo , descripcion ,file guardo el todo en la tabla servicios
         const fileName = req.file.filename;
-
+        const userId = req.isUser.id;
+        const fileType = req.file.mimetype;
+        const file = JSON.stringify({name:fileName,type:fileType})
         console.log(req.file);
 
         connection = await getDB();
@@ -38,7 +36,7 @@ const addComment = async (req, res, next) => {
         const [response] = await connection.query(
           `INSERT INTO comentarios(users_id,comentario,fichero_comentario,servicios_id) 
         VALUES(?,?,?,? )`,
-          [userId, comment, fileName, service_id]
+          [userId, comment,file, service_id]
         );
 
         //conpruebo que la query se hizo correctamente

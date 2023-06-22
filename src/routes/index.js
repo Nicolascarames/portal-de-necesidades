@@ -13,7 +13,8 @@ const {
   modifyPwd,
   modifyUser,
   imgLink,
-  getUserDet
+  getUserDet, 
+  fileUpload
 } = require('../controllers');
 
 const {
@@ -28,8 +29,8 @@ const getService = require('../controllers/getService');
 
 router.post('/login', loginUser);
 router.get('/getuser', isUser, getUser);
-router.post('/addservice', isUser, Upload, AddService);
-router.post('/newcomment', isUser, UploadComm, addComment);
+router.post('/addservice', isUser, fileUpload, AddService);
+router.post('/newcomment', isUser, fileUpload, addComment);
 router.post('/deleteuser/:id', isUser, deleteUser);
 router.get('/mail/:mail', sendMail);
 router.post('/newUser', dataValidation, newUser);

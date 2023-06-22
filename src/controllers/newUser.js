@@ -7,7 +7,7 @@ const newUser = async (req, res, next) => {
   let conexion; 
   try {
     conexion = await getDb();
-    const { nombre, username, biografia, avatar, email, pwd } = req.body;
+    const { nombre, username, biografia, email, pwd } = req.body;
 
     const [mailExist] = await conexion.query(
       `SELECT * FROM users WHERE email=?`,
@@ -27,10 +27,10 @@ const newUser = async (req, res, next) => {
     const [user] = await conexion.query(
       `
     INSERT INTO users (
-      nombre, username, biografia, avatar, email, pwd,act_code
+      nombre, username, biografia, email, pwd,act_code
     ) VALUES (?,?,?,?,?,SHA2(?,512),?)
     `,
-      [nombre, username, biografia, avatar, email, pwd,uuidv4()]
+      [nombre, username, biografia, email, pwd,uuidv4()]
     );
 
     const [getCodeUser] = await conexion.query(

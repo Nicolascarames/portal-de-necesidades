@@ -5,17 +5,15 @@ const { generateError } = require('../service/generateError');
 
 const AddService = async (req, res, next) => {
   let connection;
+  console.log('addservice',req.body)
   try {
     const { title, description } = req.body;
 
-    if (!title || !description) {
-      throw generateError('Falta titulo o descripcion', 500);
-    }
 
     if (!title || !description) {
       if (req.file) {
         fs.unlinkSync(
-          path.join(__dirname + '/../users/services/' + req.file.filename)
+          path.join(__dirname + '/../users/' + req.file.filename)
         ),
           (err) => {
             if (err) {
@@ -30,11 +28,13 @@ const AddService = async (req, res, next) => {
         //si hay un titulo , descripcion ,file guardo el todo en la tabla servicios
         const fileName = req.file.filename;
         const userId = req.isUser.id;
+        const fileType = req.file.mimetype;
+        const file = JSON.stringify({name:fileName,type:fileType})
         connection = await getDB();
 
         const [response] = await connection.query(
           `INSERT INTO servicios(titulo,descripcion,fichero,users_id) VALUES(?,?,?,? )`,
-          [title, description, fileName, userId]
+          [title, description, file, userId]
         );
         connection.release();
 

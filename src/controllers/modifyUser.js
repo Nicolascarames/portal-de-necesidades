@@ -10,15 +10,22 @@ const modifyUser = async (req, res, next) => {
     conexion = await getDb();
     const { nombre, username, biografia } = req.body;
     const { id } = req.isUser;
-    const avatar = req.file ? req.file.filename : 'default';
-
+    let file;
+    if(req.file){
+      const fileName = req.file.filename;
+      const fileType = req.file.mimetype;
+      file = JSON.stringify({name:fileName,type:fileType})
+    }else{
+      file = 'default'
+    }
+    
     await conexion.query(
       `
         UPDATE users
         SET nombre=?, username=?, biografia=?, avatar=?, updated_at=?
         WHERE id=?
         `,
-      [nombre, username, biografia, avatar, new Date(), id]
+      [nombre, username, biografia, file, new Date(), id]
     );
 
     const [user] = await conexion.query(
