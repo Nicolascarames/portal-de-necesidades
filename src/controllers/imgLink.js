@@ -2,24 +2,23 @@ var path = require('path');
 var fs = require('fs');
 
 const imgLink = async (req, res) => {
- 
-  const  id  = req.params.id;
-try {
+
+  const id = req.params.id;
+  try {
     const img = fs.readFileSync(path.join(__dirname + '/../users/' + id))
-    if(!img)
-    {res.send('imagen no encontrada')}
-    else{
-      
+    if (!img) {
+      res.end(fs.readFileSync(path.join(__dirname + '/../users/not-found.png')))
     }
-     res.end(img)
+    else {
+      res.end(img)
+    }
+  } catch (error) {
+    res.send('imagen no encontrada')
+  }
 
-} catch (error) {
-   res.send('imagen no encontrada')
-}
- 
 }
 
-   
+
 
 
 module.exports = imgLink;
