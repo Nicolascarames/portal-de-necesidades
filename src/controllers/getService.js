@@ -17,7 +17,10 @@ const getService = async (req, res, next) => {
     
 
     const [coments] = await conexion.query(
-      `SELECT * FROM comentarios WHERE servicios_id=?;`,
+      `SELECT * ,
+      (SELECT avatar FROM users WHERE id = users_id) AS avatar,
+      (SELECT username FROM users WHERE id = users_id) AS owner FROM comentarios WHERE servicios_id=?;
+      `,
       [idService]
     );
 

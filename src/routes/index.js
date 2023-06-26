@@ -14,14 +14,14 @@ const {
   modifyUser,
   imgLink,
   getUserDet, 
-  fileUpload
+  fileUpload,
+  markDone
 } = require('../controllers');
 
 const {
-  Upload,
+  
   isUser,
   dataValidation,
-  UploadComm,
   confirmMail,
   UploadAvatar,
 } = require('../middleware');
@@ -32,6 +32,8 @@ router.get('/getuser', isUser, getUser);
 router.post('/addservice', isUser, fileUpload, AddService);
 router.post('/newcomment', isUser, fileUpload, addComment);
 router.post('/deleteuser/:id', isUser, deleteUser);
+router.post('/markdone', isUser, markDone);
+
 router.get('/mail/:mail', sendMail);
 router.post('/newUser', dataValidation, newUser);
 router.post('/modifyPwd/:id', isUser, modifyPwd);
