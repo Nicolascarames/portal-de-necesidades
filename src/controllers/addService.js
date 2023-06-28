@@ -5,7 +5,6 @@ const { generateError } = require('../service/generateError');
 
 const AddService = async (req, res, next) => {
   let connection;
-  console.log('addservice',req.body)
   try {
     const { title, description } = req.body;
 

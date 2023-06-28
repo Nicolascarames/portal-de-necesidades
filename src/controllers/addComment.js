@@ -8,7 +8,7 @@ const addComment = async (req, res, next) => {
   try {
     const { service_id, comment } = req.body;
     const userId = req.isUser.id;
-
+    console.log(req.file)
     if (!service_id || !comment || !userId) {
       if (req.file) {
         fs.unlinkSync(

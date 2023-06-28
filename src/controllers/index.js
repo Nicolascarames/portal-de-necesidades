@@ -10,7 +10,9 @@ const getServices = require('./getServices');
 const modifyUser = require('./modifyUser');
 const imgLink = require('./imgLink')
 const getUserDet = require('./getUserDet');
-const fileUpload = require('./fileUpload')
+const fileUpload = require('./fileUpload');
+const markDone = require('./markDone')
+
 module.exports = {
   AddService,
   getUser,
@@ -24,5 +26,6 @@ module.exports = {
   modifyUser,
   imgLink,
   getUserDet,
-  fileUpload
+  fileUpload,
+  markDone
 };
