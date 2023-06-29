@@ -8,12 +8,15 @@ const getColaboraciones = async (req, res, next) => {
     conexion = await getDB();
 
     const [colaboraciones1] = await conexion.query(
-      `SELECT * FROM servicios WHERE users_id=?`,
-      [id]
+      `SELECT *,
+      (SELECT avatar FROM users WHERE id = users_id) AS avatar FROM servicios WHERE users_id=?;`,
+      [id,id]
     );
 
     const [colaboraciones2] = await conexion.query(
-      `SELECT * FROM comentarios WHERE users_id=?`,
+      `SELECT *,
+       (SELECT avatar FROM users WHERE id = users_id) AS avatar,
+       (SELECT username FROM users WHERE id = users_id) AS owner FROM comentarios WHERE users_id=?`,
       [id]
     );
 
