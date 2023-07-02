@@ -15,14 +15,14 @@ const Upload = multer({
 
   limits: { fileSize: 2000000 },
   fileFilter: (req, file, cb) => {
-    const fileTypes = /jpeg|jpg|png|pdf|txt/;
+    const fileTypes = /jpeg|jpg|png|pdf|txt|/;
     const mimetype = fileTypes.test(file.mimetype);
 
     const extname = fileTypes.test(path.extname(file.originalname));
     if (mimetype && extname) {
       return cb(null, true);
     }
-    return cb('extención no valida');
+    return cb(new Error('extensión no valida'));
   },
 }).single('fichero');
 

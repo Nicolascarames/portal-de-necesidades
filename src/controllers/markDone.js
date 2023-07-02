@@ -19,12 +19,14 @@ const markDone = async (req, res, next) => {
             const [check] = await conexion.query('SELECT users_id FROM servicios WHERE idservicios = ?;', [req.body.delete]);
             console.log(check);
             if (check[0].users_id === id){
+                const [done_likes] = await conexion.query(`DELETE FROM likes_servicios WHERE servicios_id = ?;`,[req.body.delete] );
+                console.log(done_likes);
                 const [done_comm] = await conexion.query(`DELETE FROM comentarios WHERE servicios_id = ?;`,[req.body.delete] );
                 console.log(done_comm);
                 const [done_service] = await conexion.query(`DELETE from  servicios  WHERE idservicios = ? LIMIT 1;`,[req.body.delete] );
                 console.log(done_service)
                 
-                done_service.affectedRows > 0 ? res.status(200).send('ok') : res.status(204).send('not ok')
+                done_service.affectedRows > 0 ? res.status(200).send({ok:true}) : res.status(204).send({ok:false})
             } else {
                 res.status(204).send('no hay permisos')
             }

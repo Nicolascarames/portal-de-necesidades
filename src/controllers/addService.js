@@ -5,6 +5,7 @@ const { generateError } = require('../service/generateError');
 
 const AddService = async (req, res, next) => {
   let connection;
+  
   try {
     const { title, description } = req.body;
 
@@ -28,21 +29,20 @@ const AddService = async (req, res, next) => {
         const fileName = req.file.filename;
         const userId = req.isUser.id;
         const fileType = req.file.mimetype;
-        const file = JSON.stringify({name:fileName,type:fileType})
+        const file = JSON.stringify({ name: fileName, type: fileType })
         connection = await getDB();
 
         const [response] = await connection.query(
           `INSERT INTO servicios(titulo,descripcion,fichero,users_id) VALUES(?,?,?,? )`,
           [title, description, file, userId]
         );
-        connection.release();
 
         //conpruebo que la query se hizo correctamente
 
         if (response.affectedRows > 0) {
           res.send({
             message: `servicio creado corectamente!`,
-            data: response,
+            id_servicio: response.insertId
           });
         } else {
           res.send({
@@ -59,16 +59,15 @@ const AddService = async (req, res, next) => {
           `INSERT INTO servicios(titulo,descripcion,users_id) VALUES(?,?,?)`,
           [title, description, userId]
         );
-        connection.release();
         //conpruebo que la query se hizo correctamente
         response.affectedRows > 0
           ? res.send({
-              msg: 'servicio creado correctamente',
-              id_servicio: response.insertId,
-            })
+            msg: 'servicio creado correctamente',
+            id_servicio: response.insertId,
+          })
           : res.send(
-              'Problema con la conexión con la base de datos :( porfavor,vuelve a intentarlo'
-            );
+            'Problema con la conexión con la base de datos :( porfavor,vuelve a intentarlo'
+          );
       }
     }
   } catch (error) {
