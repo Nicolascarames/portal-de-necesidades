@@ -29,9 +29,11 @@ const addLike = require('../controllers/addLike');
 const getLikesServices = require('../controllers/getLikesServices');
 const getLikesComents = require('../controllers/getLikesComents');
 const getColaboraciones = require('../controllers/getColaboraciones');
+const getUserById = require('../controllers/getUserById');
 
 router.post('/login', loginUser);
 router.get('/getuser', isUser, getUser);
+router.get('/getuserbyid/:id', isUser, getUserById);
 router.post('/addservice', isUser, fileUpload, AddService);
 router.post('/newcomment', isUser, fileUpload, addComment);
 router.post('/deleteuser/:id', isUser, deleteUser);
@@ -39,7 +41,7 @@ router.post('/markdone', isUser, markDone);
 
 router.get('/mail/:mail', sendMail);
 router.post('/newUser', dataValidation, newUser);
-router.post('/modifyPwd/:id', isUser, modifyPwd);
+router.post('/modifyPwd', isUser, modifyPwd);
 router.get('/confirm/:code', confirmMail);
 router.get('/services/:order', getServices);
 router.get('/service/:id', getService);

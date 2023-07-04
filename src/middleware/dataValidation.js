@@ -9,19 +9,19 @@ const dataValidation = (req, res, next) => {
       avatar: Joi.string().max(45),
       email: Joi.string().email().max(45).required(),
       token: Joi.string().max(50),
-      pwd: Joi.string().min(8).max(45).required(),
+      pwd: Joi.string().min(4).max(45).required(),
     });
 
     const validation = schema.validate(req.body);
     console.log(validation);
     if (validation.error) {
-      res.status(403).send({message:validation.error});
+      res.status(403).send({ message: validation.error });
       return;
     }
 
     next();
   } catch (error) {
-    res.status(403).send({message:error});
+    res.status(403).send({ message: error });
   }
 };
 

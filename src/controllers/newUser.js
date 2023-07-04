@@ -4,7 +4,7 @@ const sendMail = require('../controllers/sendMail');
 const { v4: uuidv4 } = require('uuid');
 
 const newUser = async (req, res, next) => {
-  let conexion; 
+  let conexion;
   try {
     conexion = await getDb();
     const { nombre, username, biografia, email, pwd } = req.body;
@@ -13,24 +13,24 @@ const newUser = async (req, res, next) => {
       `SELECT * FROM users WHERE email=?`,
       [email]
     );
-    const [usernameExists]= await conexion.query(
+    const [usernameExists] = await conexion.query(
       `SELECT * FROM users WHERE username=?`,
       [username]
     );
     if (mailExist.length > 0) {
-      throw generateError('Mail en uso', 500); 
+      throw generateError('Mail en uso', 500);
     }
     if (usernameExists.length > 0) {
       throw generateError('Nombre de usuario en uso', 500);
     }
-    
+
     const [user] = await conexion.query(
       `
     INSERT INTO users (
       nombre, username, biografia, email, pwd,act_code
-    ) VALUES (?,?,?,?,?,SHA2(?,512),?)
+    ) VALUES (?,?,?,?,SHA2(?,512),?)
     `,
-      [nombre, username, biografia, email, pwd,uuidv4()]
+      [nombre, username, biografia, email, pwd, uuidv4()]
     );
 
     const [getCodeUser] = await conexion.query(
@@ -46,7 +46,6 @@ const newUser = async (req, res, next) => {
     });
 
     sendMail(getCodeUser[0].act_code, email);
-
   } catch (error) {
     next(error);
   } finally {
