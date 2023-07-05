@@ -8,7 +8,7 @@ const addLike = async (req, res, next) => {
     const { id } = req.isUser;
     const { servicios_id, comentarios_id, idLikes } = req.body;
 
-    if (servicios_id) {
+    if (servicios_id && !comentarios_id) {
       if (idLikes) {
         const [likesServicios] = await conexion.query(
           `DELETE FROM likes_servicios WHERE idlikes=?`,
@@ -47,10 +47,11 @@ const addLike = async (req, res, next) => {
       }
       if (!idLikes) {
         const [likesComentarios] = await conexion.query(
-          `INSERT INTO likes_comentarios (megusta,comentarios_id, users_id) 
-                  VALUES(?,?,?)`,
-          [1, comentarios_id, id]
+          `INSERT INTO likes_comentarios (megusta,comentarios_id, users_id, servicios_id) 
+                  VALUES(?,?,?,?)`,
+          [1, comentarios_id, id, servicios_id]
         );
+        console.log(1, comentarios_id, id, servicios_id);
         return res.send({
           status: 'ok',
           data: likesComentarios,
