@@ -16,6 +16,7 @@ const {
   getUserDet,
   fileUpload,
   markDone,
+  deleteComment
 } = require('../controllers');
 
 const {
@@ -40,7 +41,7 @@ router.post('/newcomment', isUser, fileUpload, addComment);
 router.post('/deleteuser/:id', isUser, deleteUser);
 router.post('/markdone', isUser, markDone);
 router.post('/search',srcData);
-
+router.post('/deletecomment',isUser,deleteComment)
 
 router.get('/mail/:mail', sendMail);
 router.post('/newUser', dataValidation, newUser);

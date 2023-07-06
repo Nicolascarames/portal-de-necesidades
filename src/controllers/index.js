@@ -12,7 +12,7 @@ const imgLink = require('./imgLink')
 const getUserDet = require('./getUserDet');
 const fileUpload = require('./fileUpload');
 const markDone = require('./markDone')
-
+const deleteComment = require('./deleteComment')
 module.exports = {
   AddService,
   getUser,
@@ -27,5 +27,6 @@ module.exports = {
   imgLink,
   getUserDet,
   fileUpload,
-  markDone
+  markDone,
+  deleteComment
 };

@@ -18,6 +18,7 @@ const markDone = async (req, res, next) => {
             }
         }
         if (req.body.delete) {
+          
             let files = [];
             const [files_comm] = await conexion.query(`SELECT fichero_comentario from comentarios where servicios_id= ? ;`, [req.body.delete]);
            
