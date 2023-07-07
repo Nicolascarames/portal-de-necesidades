@@ -30,6 +30,7 @@ const getLikesServices = require('../controllers/getLikesServices');
 const getLikesComents = require('../controllers/getLikesComents');
 const getColaboraciones = require('../controllers/getColaboraciones');
 const getUserById = require('../controllers/getUserById');
+const bestComent = require('../controllers/bestComent');
 
 router.post('/login', loginUser);
 router.get('/getuser', isUser, getUser);
@@ -38,6 +39,7 @@ router.post('/addservice', isUser, fileUpload, AddService);
 router.post('/newcomment', isUser, fileUpload, addComment);
 router.post('/deleteuser/:id', isUser, deleteUser);
 router.post('/markdone', isUser, markDone);
+router.post('/bestcoment/:id', isUser, bestComent);
 
 router.get('/mail/:mail', sendMail);
 router.post('/newUser', dataValidation, newUser);
