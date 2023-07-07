@@ -4,14 +4,16 @@ const { generateError } = require('../service/generateError');
 const bestComent = async (req, res, next) => {
   let conexion;
   try {
-    const { id } = req.isUser;
-    const { idcomentarios } = req.params;
+    const { id } = req.params;
+    // console.log(req.params);
     conexion = await getDb();
 
     const respuesta = await conexion.query(
       `UPDATE comentarios SET mejor_comentario =? WHERE idcomentarios=?`,
-      [1, idcomentarios]
+      [1, id]
     );
+
+    // console.log(respuesta);
 
     res.send({
       status: 'ok',
