@@ -62,7 +62,6 @@ const loginUser = async (req, res, next) => {
       id:usuario.id
     });
   } catch (error) {
-    // console.error(error);
     next(error);
   } finally {
     if (conexion) conexion.release();

@@ -18,7 +18,7 @@ const modifyPwd = async (req, res, next) => {
     );
 
     if (user.length === 0) {
-      throw generateError('Pwd vieja, no correcta', 401);
+      throw generateError('Password actual no correcta', 401);
     }
 
     await conexion.query(

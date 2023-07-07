@@ -20,7 +20,7 @@ const deleteComment = async (req, res, next) => {
                         if (err) {
                           console.log(err) 
                           res.status(200).send({ok:true,message:'file no encontrado'})
-                          return;
+
                         }else{
                             res.status(200).send({ok:true})
                         }

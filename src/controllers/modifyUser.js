@@ -1,6 +1,7 @@
 const getDb = require('../database/db');
 const { generateError } = require('../service/generateError');
-
+var fs = require('fs');
+var path = require('path');
 const modifyUser = async (req, res, next) => {
   // console.log(req.body);
   // console.log(req.isUser);
@@ -15,11 +16,18 @@ const modifyUser = async (req, res, next) => {
       const fileName = req.file.filename;
       const fileType = req.file.mimetype;
       file = JSON.stringify({name:fileName,type:fileType})
-    }else{
-      file = JSON.stringify({name:'default_avatar.png',type:'image/png'})
-    }
-    
-    await conexion.query(
+      const [oldavatar]= await conexion.query(
+        `SELECT avatar FROM users WHERE id= ? `,[id]
+        
+      );
+     
+        const oldfile = JSON.parse(oldavatar[0].avatar)
+        fs.unlink(path.join(__dirname + '/../users/' + oldfile.name), function(err) {
+          if (err) {
+            console.log(err) 
+          }
+        });
+      await conexion.query(
       `
         UPDATE users
         SET nombre=?, username=?, biografia=?, avatar=?, updated_at=?
@@ -27,6 +35,20 @@ const modifyUser = async (req, res, next) => {
         `,
       [nombre, username, biografia, file, new Date(), id]
     );
+   
+  
+    }else{
+      await conexion.query(
+        `
+          UPDATE users
+          SET nombre=?, username=?, biografia=?,  updated_at=?
+          WHERE id=?
+          `,
+        [nombre, username, biografia,  new Date(), id]
+      );
+    }
+    
+    
 
     const [user] = await conexion.query(
       `
@@ -46,7 +68,6 @@ const modifyUser = async (req, res, next) => {
       role: user[0].role,
     };
 
-    conexion.release();
 
     res.send({
       status: 'ok',
