@@ -16,7 +16,7 @@ const modifyUser = async (req, res, next) => {
       const fileType = req.file.mimetype;
       file = JSON.stringify({name:fileName,type:fileType})
     }else{
-      file = 'default'
+      file = JSON.stringify({name:'default_avatar.png',type:'image/png'})
     }
     
     await conexion.query(
