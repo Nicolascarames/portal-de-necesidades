@@ -43,7 +43,7 @@ router.post('/deleteuser/:id', isUser, deleteUser);
 router.post('/markdone', isUser, markDone);
 router.post('/search', srcData);
 router.post('/deletecomment', isUser, deleteComment);
-router.post('/bestcoment/:id', isUser, bestComent);
+router.get('/bestcoment/:id', isUser, bestComent);
 
 router.get('/mail/:mail', sendMail);
 router.post('/newUser', dataValidation, newUser);

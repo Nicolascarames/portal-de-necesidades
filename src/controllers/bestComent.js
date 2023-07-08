@@ -8,9 +8,26 @@ const bestComent = async (req, res, next) => {
     // console.log(req.params);
     conexion = await getDb();
 
+    const [resp] = await conexion.query(
+      `SELECT mejor_comentario FROM comentarios WHERE idcomentarios=?`,
+      [id]
+    );
+
+    console.log(resp);
+    let correcto = resp[0].mejor_comentario;
+    console.log(correcto);
+
+    if (correcto === 1) {
+      correcto = 0;
+    } else {
+      correcto = 1;
+    }
+
+    // console.log(correcto);
+
     const respuesta = await conexion.query(
       `UPDATE comentarios SET mejor_comentario =? WHERE idcomentarios=?`,
-      [1, id]
+      [correcto, id]
     );
 
     // console.log(respuesta);
@@ -19,6 +36,7 @@ const bestComent = async (req, res, next) => {
       status: 'ok',
       message: 'Seleccionado como mejor comentario',
       respuesta,
+      correctosiono: correcto,
     });
   } catch (error) {
     next(error);

@@ -5,9 +5,11 @@ const { generateError } = require('../service/generateError');
 
 const isUser = async (req, res, next) => {
   let conexion;
-  
+
   try {
     const { authorization } = req.headers;
+    // console.log(req.headers);
+    // console.log(authorization);
 
     if (!authorization) {
       throw generateError('Falta cabezera de autorizacion', 401);
