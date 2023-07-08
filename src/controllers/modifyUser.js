@@ -21,12 +21,15 @@ const modifyUser = async (req, res, next) => {
         
       );
      
-        const oldfile = JSON.parse(oldavatar[0].avatar)
-        fs.unlink(path.join(__dirname + '/../users/' + oldfile.name), function(err) {
+        const oldfile = JSON.parse(oldavatar[0].avatar);
+        if(oldfile.name !== 'default_avatar.png'){
+           fs.unlink(path.join(__dirname + '/../users/' + oldfile.name), function(err) {
           if (err) {
             console.log(err) 
-          }
-        });
+          }});
+        }
+       
+        
       await conexion.query(
       `
         UPDATE users
