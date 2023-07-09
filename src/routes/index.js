@@ -33,6 +33,8 @@ const getColaboraciones = require('../controllers/getColaboraciones');
 const getUserById = require('../controllers/getUserById');
 const srcData = require('../controllers/srcData');
 const bestComent = require('../controllers/bestComent');
+const privadosPost = require('../controllers/privadosPost');
+const privadosGet = require('../controllers/privadosGet');
 
 router.post('/login', loginUser);
 router.get('/getuser', isUser, getUser);
@@ -44,6 +46,9 @@ router.post('/markdone', isUser, markDone);
 router.post('/search', srcData);
 router.post('/deletecomment', isUser, deleteComment);
 router.get('/bestcoment/:id', isUser, bestComent);
+
+router.post('/privados', isUser, privadosPost);
+router.get('/privados/:id', isUser, privadosGet);
 
 router.get('/mail/:mail', sendMail);
 router.post('/newUser', dataValidation, newUser);
