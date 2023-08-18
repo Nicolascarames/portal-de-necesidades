@@ -8,7 +8,10 @@ const newUser = async (req, res, next) => {
   try {
     conexion = await getDb();
     const { nombre, username, biografia, email, pwd } = req.body;
-    const avatar = JSON.stringify({name:'default_avatar.png',type:'image/png'})
+    const avatar = JSON.stringify({
+      name: 'default_avatar.png',
+      type: 'image/png',
+    });
 
     const [mailExist] = await conexion.query(
       `SELECT * FROM users WHERE email=?`,
@@ -31,11 +34,15 @@ const newUser = async (req, res, next) => {
       nombre, username, biografia, avatar,email, pwd,act_code
     ) VALUES (?,?,?,?,?,SHA2(?,512),?)
     `,
-      [nombre, username, biografia,avatar, email, pwd, uuidv4()]
+      [nombre, username, biografia, avatar, email, pwd, uuidv4()]
     );
 
     const [getCodeUser] = await conexion.query(
       `SELECT act_code FROM users WHERE email='${email}'`
+    );
+
+    await conexion.query(
+      `UPDATE  users SET active ='1',updated_at = NOW() WHERE act_code = '${getCodeUser[0].act_code}'`
     );
 
     // console.log(getIdUser);

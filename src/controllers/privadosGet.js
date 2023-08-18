@@ -8,7 +8,7 @@ const privadosGet = async (req, res, next) => {
     const toUser = req.params.id;
     const { id } = req.isUser;
 
-    const [privados] = await conexion.query(
+    const [privados1] = await conexion.query(
       `
             SELECT *
             FROM mensajes_privados
@@ -16,6 +16,17 @@ const privadosGet = async (req, res, next) => {
             `,
       [id, toUser]
     );
+
+    const [privados2] = await conexion.query(
+      `
+            SELECT *
+            FROM mensajes_privados
+            WHERE users_id=? AND to_user=?
+            `,
+      [toUser, id]
+    );
+
+    const privados = privados1.concat(privados2);
 
     res.send({
       status: 'ok',

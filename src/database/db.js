@@ -13,7 +13,7 @@ let pool;
 async function DBconn() {
   if (!pool) {
     pool = mysql.createPool({
-      connectionLimit: 10,
+      connectionLimit: 50,
       host: host,
       user: user,
       password: password,
