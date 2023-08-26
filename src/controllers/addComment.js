@@ -6,14 +6,13 @@ const { generateError } = require('../service/generateError');
 const addComment = async (req, res, next) => {
   let connection;
   try {
+    connection = await getDB();
     const { service_id, comment } = req.body;
     const userId = req.isUser.id;
-    console.log(req.file)
+    console.log(req.file);
     if (!service_id || !comment || !userId) {
       if (req.file) {
-        fs.unlinkSync(
-          path.join(__dirname + '/../users/' + req.file.filename)
-        ),
+        fs.unlinkSync(path.join(__dirname + '/../users/' + req.file.filename)),
           (err) => {
             if (err) {
               console.log(err);
@@ -28,15 +27,13 @@ const addComment = async (req, res, next) => {
         const fileName = req.file.filename;
         const userId = req.isUser.id;
         const fileType = req.file.mimetype;
-        const file = JSON.stringify({name:fileName,type:fileType})
+        const file = JSON.stringify({ name: fileName, type: fileType });
         console.log(req.file);
-
-        connection = await getDB();
 
         const [response] = await connection.query(
           `INSERT INTO comentarios(users_id,comentario,fichero_comentario,servicios_id) 
         VALUES(?,?,?,? )`,
-          [userId, comment,file, service_id]
+          [userId, comment, file, service_id]
         );
 
         //conpruebo que la query se hizo correctamente
@@ -52,7 +49,7 @@ const addComment = async (req, res, next) => {
 
         const userId = req.isUser.id;
 
-        const connection = await getDB();
+        // const connection = await getDB();
         const [response] = await connection.query(
           `INSERT INTO comentarios(users_id,comentario,servicios_id) 
         VALUES(?,?,?)`,

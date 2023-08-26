@@ -30,8 +30,6 @@ const modifyPwd = async (req, res, next) => {
       [pwdNueva, new Date(), id]
     );
 
-    conexion.release();
-
     res.send({
       status: 'ok',
       message: 'Pwd cambiada correctamente',

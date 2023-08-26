@@ -7,6 +7,7 @@ const AddService = async (req, res, next) => {
   let connection;
 
   try {
+    connection = await getDB();
     const {
       title,
       description,
@@ -37,7 +38,6 @@ const AddService = async (req, res, next) => {
         const userId = req.isUser.id;
         const fileType = req.file.mimetype;
         const file = JSON.stringify({ name: fileName, type: fileType });
-        connection = await getDB();
 
         const [response] = await connection.query(
           `INSERT INTO servicios(titulo, descripcion, fichero, users_id, hashtag1, hashtag2, hashtag3, hashtag4, hashtag5) VALUES(?,?,?,?,?,?,?,?,?)`,
@@ -71,7 +71,7 @@ const AddService = async (req, res, next) => {
         //si solo  hay un titulo y una descripcion guardo las dos  en la tabla servicios sin la imagen
 
         const userId = req.isUser.id;
-        const connection = await getDB();
+        // const connection = await getDB();
         const [response] = await connection.query(
           `INSERT INTO servicios(titulo,descripcion,users_id, hashtag1, hashtag2, hashtag3, hashtag4, hashtag5) VALUES(?,?,?,?,?,?,?,?)`,
           [

@@ -10,7 +10,7 @@ const port = process.env.port || 3306;
 
 let pool;
 
-async function DBconn() {
+async function getDb() {
   if (!pool) {
     pool = mysql.createPool({
       connectionLimit: 50,
@@ -24,4 +24,4 @@ async function DBconn() {
   return await pool.getConnection();
 }
 
-module.exports = DBconn;
+module.exports = getDb;

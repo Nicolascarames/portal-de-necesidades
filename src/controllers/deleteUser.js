@@ -27,8 +27,6 @@ const deleteUser = async (req, res, next) => {
     } else {
       throw generateError('no tienes permisos para borrar usuario', 401);
     }
-
-    conexion.release();
   } catch (error) {
     next(error);
   } finally {
